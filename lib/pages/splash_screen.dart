@@ -34,19 +34,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _registerServices() {
     GetIt getIt = GetIt.instance;
-    getIt.registerSingleton<RoutingService>(
-      RoutingService(),
-    );
-    getIt.registerSingleton<MediaServices>(
-      MediaServices(),
-    );
+    getIt.registerSingleton<RoutingService>(RoutingService());
+    getIt.registerSingleton<MediaService>(MediaService());
 
-    getIt.registerSingleton<CloudStorageService>(
-      CloudStorageService(),
-    );
-    getIt.registerSingleton<DatabaseService>(
-      DatabaseService(),
-    );
+    getIt.registerSingleton<CloudStorageService>(CloudStorageService());
+    getIt.registerSingleton<DatabaseService>(DatabaseService());
   }
 
   @override

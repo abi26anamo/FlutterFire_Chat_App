@@ -1,3 +1,5 @@
+import 'package:chat_app/pages/home_page.dart';
+import 'package:chat_app/pages/singup_page.dart';
 import 'package:chat_app/pages/splash_screen.dart';
 import 'package:chat_app/providers/auth_provider.dart';
 import 'package:chat_app/services/routing_service.dart';
@@ -39,7 +41,11 @@ class MainApp extends StatelessWidget {
         ),
         navigatorKey: RoutingService.navigatorKey,
         initialRoute: '/login',
-        routes: {'/login': (BuildContext contenxt) =>const LoginPage()},
+        routes: {
+          '/login': (BuildContext contenxt) => const LoginPage(),
+          '/home': (BuildContext contenxt) => const HomePage(),
+          '/singup': (BuildContext contenxt) => const SingUpPage()
+        },
       ),
     );
   }

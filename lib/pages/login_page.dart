@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _registerAccountLink() {
     return GestureDetector(
-      onTap: () => {},
+      onTap: () => _navigation.navigateToRoute("/singup"),
       child: Container(
         child: Text(
           'Don\'t have an account?',
