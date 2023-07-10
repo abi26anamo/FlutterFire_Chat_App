@@ -9,7 +9,7 @@ class CustomAppBar extends StatelessWidget {
     this._barTitle, {
    this.primaryAction,
     this.secondaryAction,
-    this.fontSize=35
+    this.fontSize=28
   });
   late double _deviceHeight;
   late double _deviceWidth;

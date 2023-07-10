@@ -1,5 +1,3 @@
-
-
 import 'package:chat_app/models/chat_message.dart';
 import 'package:chat_app/models/chat_user.dart';
 
@@ -22,16 +20,19 @@ class Chat{
   }){
     _recepients = members.where((_i) => _i.uid != currentUserUid).toList();
   }
-  List<ChatUser> get recepients => _recepients;
+
+   List<ChatUser> recepients() {
+    return _recepients;
+  }
 
   String title(){
     return group ? 
                   _recepients.map((_user) => _user.name).join(",") 
-                  : recepients[0].name;
+                  : _recepients[0].name;
   }
   String imageURL(){
     return group ? 
      "https://e7.pngegg.com/pngimages/380/670/png-clipart-group-chat-logo-blue-area-text-symbol-metroui-apps-live-messenger-alt-2-blue-text.png" 
-     : recepients[0].imageURL;
+     : _recepients[0].imageURL;
   }
 }
