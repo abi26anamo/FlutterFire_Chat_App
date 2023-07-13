@@ -1,16 +1,20 @@
-# chat_app
+# Chat_app
 
-A new Flutter project.
+Full Stack Flutter Firebase chat_app Media 
 
-## Getting Started
+## Features
+- Email & Password Authentication
+- Persisting Auth State
+- Searching for users
+- chatting with single user
+- Group chat
+- Deleting chat
+- logging out
 
-This project is a starting point for a Flutter application.
+## Tech Used
+**Server**: Firebase, CloudFirestore, Firebase Storage, RealtimeDatabase, 
 
-A few resources to get you started if this is your first Flutter project:
+**Client**: Flutter,provider state managment,
+## Feedback
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+If you have any feedback, please reach out to me at abianamo282@gmail.com
