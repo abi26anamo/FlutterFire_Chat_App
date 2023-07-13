@@ -112,7 +112,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (_chat.messages.isNotEmpty){
       _subtitleText = _chat.messages.first.type != MessageType.TEXT ? "Media Attachemnt":_chat.messages.first.content;
     }
-    return CustomListViewTile(
+    return ActiveCustomListViewTile(
       height: _deviceHeight * 0.10,
       title: _chat.title(),
       subtitle: _subtitleText,

@@ -161,7 +161,7 @@ class _SingUpPageState extends State<SingUpPage> {
           _singUpFromKey.currentState!.save();
           String? _uid = await _auth.singupUsingEmailandPassword(_email!, _password!);
           String? _imageURL = await _cloudStorage.saveUserImageToStorage(_uid!, _profileImage!);
-          await _db.createUserInDB(_uid, _email!,_name!, _imageURL!);
+          await _db.createUser(_uid, _email!,_name!, _imageURL!);
           await _auth.logOut();
           await _auth.emailPasswordSignIn(_email!, _password!);
         } 

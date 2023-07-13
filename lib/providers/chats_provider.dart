@@ -17,7 +17,7 @@ class ChatProvider extends ChangeNotifier {
 
   List<Chat>? chats;
 
-  late StreamSubscription _chatStream;
+  late StreamSubscription _chatsStream;
 
   ChatProvider(this._auth) {
     _db = GetIt.instance.get<DatabaseService>();
@@ -26,13 +26,13 @@ class ChatProvider extends ChangeNotifier {
 
   @override
   void dispose() {
-    _chatStream.cancel();
+    _chatsStream.cancel();
     super.dispose();
   }
 
   void getChats() async {
     try {
-      _chatStream =
+      _chatsStream =
           _db.getChatsForUser(_auth.user.uid).listen((_snapshot) async {
         chats = await Future.wait(
           _snapshot.docs.map(

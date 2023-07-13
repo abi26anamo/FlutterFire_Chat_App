@@ -8,6 +8,7 @@ import 'package:chat_app/services/media_sevices.dart';
 import 'package:chat_app/services/routing_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get_it/get_it.dart';
 
 class ChatPageProvider extends ChangeNotifier {
@@ -23,10 +24,17 @@ class ChatPageProvider extends ChangeNotifier {
 
   late StreamSubscription _messageStream;
 
+  late StreamSubscription _keyboardVisibilityStream;
+  late KeyboardVisibilityController _keyboardVisibilityController;
+
   String? _message;
 
   String get message {
     return message;
+  }
+
+  void set message(String _value) {
+    _message = _value;
   }
 
   ChatPageProvider(this._chatId, this._auth, this._messagesListViewController) {
@@ -34,7 +42,9 @@ class ChatPageProvider extends ChangeNotifier {
     _storage = GetIt.instance.get<CloudStorageService>();
     _media = GetIt.instance.get<MediaService>();
     _navigation = GetIt.instance.get<RoutingService>();
+    _keyboardVisibilityController = KeyboardVisibilityController();
     listenToMessages();
+    listentoKeyboardChanges();
   }
 
   @override
@@ -53,11 +63,28 @@ class ChatPageProvider extends ChangeNotifier {
         }).toList();
         messages = _messages;
         notifyListeners();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (_messagesListViewController.hasClients) {
+            _messagesListViewController.jumpTo(
+              _messagesListViewController.position.maxScrollExtent,
+            );
+          }
+        });
         //Add scrooll to bottom call
       });
     } catch (e) {
       print("Error in listening to messages: $e");
     }
+  }
+
+  void listentoKeyboardChanges() {
+    _keyboardVisibilityStream =
+        _keyboardVisibilityController.onChange.listen((_event) {
+      _db.updateChatData(
+        _chatId,
+        {"is_activity": _event},
+      );
+    });
   }
 
   void sendTextMessage() {
@@ -72,24 +99,23 @@ class ChatPageProvider extends ChangeNotifier {
     }
   }
 
-  void sendImageMessage()async{
-    try{
+  void sendImageMessage() async {
+    try {
       PlatformFile? _file = await _media.pickImageFromLibrary();
-      if(_file !=null){
-        String? _downloadUrl = await _storage.saveChatImageToStorage(_chatId,_auth.user.uid,_file);
+      if (_file != null) {
+        String? _downloadUrl = await _storage.saveChatImageToStorage(
+            _chatId, _auth.user.uid, _file);
         ChatMessage _messageToSend = ChatMessage(
-        senderId: _auth.user.uid,
-        type: MessageType.IMAGE,
-        content: _downloadUrl!,
-        sentTime: DateTime.now(),
-      );
-      _db.addMessageToChat(_chatId, _messageToSend);
+          senderId: _auth.user.uid,
+          type: MessageType.IMAGE,
+          content: _downloadUrl!,
+          sentTime: DateTime.now(),
+        );
+        _db.addMessageToChat(_chatId, _messageToSend);
       }
-
-    }catch(e){
+    } catch (e) {
       print("Error in sending image message: $e");
     }
-
   }
 
   void deleteChat() {

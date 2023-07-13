@@ -20,7 +20,7 @@ class AuthenticationProvider extends ChangeNotifier {
 
     _auth.authStateChanges().listen((_user) {
       if (_user != null) {
-        _databaseService.updateUserLastSeen(_user.uid);
+        _databaseService.updateUserLastSeenTime(_user.uid);
         _databaseService.getUser(_user.uid).then((_snapshot) {
           Map<String, dynamic> _userData =
               _snapshot.data() as Map<String, dynamic>;

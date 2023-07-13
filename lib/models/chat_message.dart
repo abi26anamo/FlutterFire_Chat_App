@@ -13,9 +13,9 @@ class ChatMessage {
   final DateTime sentTime;
 
   ChatMessage(
-      {required this.senderId,
+      {required this.content,
       required this.type,
-      required this.content,
+      required this.senderId,
       required this.sentTime});
 
   factory ChatMessage.fromJSON(Map<String, dynamic> _json) {
@@ -31,12 +31,13 @@ class ChatMessage {
         _messageType = MessageType.UNKNOWN;
     }
     return ChatMessage(
-      senderId: _json["senderId"],
-      type: _messageType,
       content: _json["content"],
-      sentTime: _json["sentTime"].toDate(),
+      type: _messageType,
+      senderId: _json["sender_id"],
+      sentTime: _json["sent_time"].toDate(),
     );
   }
+
   Map<String, dynamic> toJson() {
     String _messageType;
     switch (type) {
@@ -50,10 +51,10 @@ class ChatMessage {
         _messageType = "";
     }
     return {
-      "senderId": senderId,
-      "type": _messageType,
       "content": content,
-      "sentTime": Timestamp.fromDate(sentTime),
+      "type": _messageType,
+      "sender_id": senderId,
+      "sent_time": Timestamp.fromDate(sentTime),
     };
   }
 }
